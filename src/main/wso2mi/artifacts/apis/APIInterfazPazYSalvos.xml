@@ -3,16 +3,16 @@
     <resource methods="GET" uri-template="/readvalidateinterfacestudents?studentid={studentid}">
         <inSequence>
             <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
-            <property expression="fn:concat('BDUXXI Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
+            <property expression="fn:concat('URosario Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
             <switch source="get-property('query.param.studentid')">
                 <case regex="^(79|51|52).*">
-                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante tiene temas pendientes, no es posible generar el Paz y salvo correspondiente"/>
+                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante presenta temas pendientes aún, por lo cual no es posible generar el Paz y salvo correspondiente."/>
                 </case>
                 <case regex="^(17|21|41).*">
-                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante sin tiene temas pendientes, es posible generar el Paz y salvo correspondiente"/>
+                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante al día en todas las fuentes de información, por lo cual es posible generar el Paz y salvo correspondiente."/>
                 </case>
                 <default>
-                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante sin tiene temas pendientes, es posible generar el Paz y salvo correspondiente"/>
+                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante al día en todas las fuentes de información, por lo cual es posible generar el Paz y salvo correspondiente."/>
                 </default>
             </switch>            
             <switch source="get-property('query.param.studentid')">

@@ -2,9 +2,8 @@
 <api context="/apihubintpazsalvos" name="APIInterfazPazYSalvos" statistics="enable" trace="enable" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="GET" uri-template="/readvalidateinterfacestudents?studentid={studentid}">
         <inSequence>
-            <property value="eyJraWQiOiJnYXRld2F5X2NlcnRpZmljYXRlX2FsaWFzIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJiOTY5MGZiYS04MzgwLTRkZDQtYWJhMy1jNzY4YzU0YmMyMzZAY2FyYm9uLnN1cGVyIiwiYXVkIjoiY2hvcmVvOmRlcGxveW1lbnQ6c2FuZGJveCIsIm9yZ2FuaXphdGlvbiI6eyJ1dWlkIjoiYzE5ZTIwZTMtOGYxZi00NGQ2LWFiNTgtNTk0ZmVmNDdjZmIyIn0sImlzcyI6Imh0dHBzOlwvXC9zdHMuY2hvcmVvLmRldjo0NDNcL2FwaVwvYW1cL3B1Ymxpc2hlclwvdjJcL2FwaXNcL2ludGVybmFsLWtleSIsImtleXR5cGUiOiJTQU5EQk9YIiwic3Vic2NyaWJlZEFQSXMiOlt7InN1YnNjcmliZXJUZW5hbnREb21haW4iOm51bGwsIm5hbWUiOiJ1bml2ZXJzaWRhZGRlbHJvc2FyaW8gLSBBcGlIdWJVUm9zYXJpbyIsImNvbnRleHQiOiJcL2MxOWUyMGUzLThmMWYtNDRkNi1hYjU4LTU5NGZlZjQ3Y2ZiMlwvd29ya3Nob3BcL3VuaXZlcnNpZGFkZGVscm9zYXJpb1wvYXBpaHVidXJvc2FyaW8tOGFlXC92MS4wIiwicHVibGlzaGVyIjoiY2hvcmVvX3Byb2RfYXBpbV9hZG1pbiIsInZlcnNpb24iOiJ2MS4wIiwic3Vic2NyaXB0aW9uVGllciI6bnVsbH1dLCJleHAiOjE3NDMwODY3NzMsInRva2VuX3R5cGUiOiJJbnRlcm5hbEtleSIsImlhdCI6MTc0MzA4NjE3MywianRpIjoiODI3MmQxN2QtNWE2My00OGMwLThhZjQtN2ZkMzE5YmVjMWRkIn0.XKwkyOTlR0F8DhujiyCtQN822jtO_qn4s6hSr9hkKllLmKdCXZherJD23aPWs0FGzf-L_VPM2Cl_tZLyBz_NFiMrilu0C6nT1SdMyeeo71PDChtYi7PHKzFQ_TANVYvmAnNd-GQehnSwqK2HrakRMJhTd7E_n8SYmnpQfNh7p6CBtNfVVAA0fGVlqo1292xogJzjRfBwtanZnxhpShASMM5D5CBWnMP6VwEw8YOJz9evoADVuEqWXuIcdWVHj83erUScIQYe6jtcLoQntMZuzES_JVyRDQ9YSjzOLhIIN7Nu6SjUZ4TOnuFzAjI5HxWK7aUVCv9Qm1qWkqQxAWqJ40xbBmwKTWXJEbDoj0atLQ9w1zzGt6nua_L8oKN9BdTEGWYXtytoRmqkeeZeKeDBMlIUlLTCbybArBMXdf_5_9DumwLj2ath_CTGMc8uhuCdTjIuqmxj92VyUEmm7aIoSWjdpHbiDEBw7RgSnpMBo3XNgLYDReMYHGIGGjaiTG6y8pR3_SDatmCbtb3rk-LfkDUmplZI872dEhn1NQlTBWztVPZCHj5EhSNmkSHAk3Z2BZhAivO4T3ki2f1a1DRNHZi68ZTMGvswAnTTd-H8YKAogwGZvpxIlru9tcOFxxFgzLg4bd-_x2mDOS3-163F-wM0ygl21hXwNGZcWbpmSH4" name="Test-Key" scope="default" type="STRING"/>
             <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
-            <property expression="fn:concat('URosario Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
+            <property expression="fn:concat('BDUXXI Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
             <switch source="get-property('query.param.studentid')">
                 <case regex="^(79|51|52).*">
                     <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante tiene temas pendientes, no es posible generar el Paz y salvo correspondiente"/>
@@ -15,68 +14,135 @@
                 <default>
                     <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante sin tiene temas pendientes, es posible generar el Paz y salvo correspondiente"/>
                 </default>
-            </switch>
-            <!-- readvalidatebduxxi -->
-            <property name="Test-Key" scope="transport" expression="get-property('Test-Key')"/>
-            <property expression="fn:concat('https://c19e20e3-8f1f-44d6-ab58-594fef47cfb2-dev.e1-us-east-azure.choreoapis.dev/workshop/universidaddelrosario/apihuburosario-8ae/v1.0/readvalidatebduxxi?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateBduxxiEndpoint" scope="default" type="STRING"/>
-            <call>
-                <endpoint key="ValidateBduxxiEndpoint"/>
-            </call>
-            <log level="full"/>
-            <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSBDUXXI" scope="default" type="STRING"/>
-            <log level="full">
-                <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSBDUXXI"/>
-            </log>
-            <!-- readvalidatewssap -->
-            <property expression="fn:concat('https://c19e20e3-8f1f-44d6-ab58-594fef47cfb2-dev.e1-us-east-azure.choreoapis.dev/workshop/universidaddelrosario/apihuburosario-8ae/v1.0/readvalidatewssap?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateSAPHANNAEndpoint" scope="default" type="STRING"/>
-            <call>
-                <endpoint key="ValidateSAPHANNAEndpoint"/>
-            </call>
-            <log level="full"/>
-            <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSSAP" scope="default" type="STRING"/>
-            <log level="full">
-                <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSSAP"/>
-            </log>
-            <!-- readvalidatewskoha -->
-            <property expression="fn:concat('https://c19e20e3-8f1f-44d6-ab58-594fef47cfb2-dev.e1-us-east-azure.choreoapis.dev/workshop/universidaddelrosario/apihuburosario-8ae/v1.0/readvalidatewskoha?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateKOHAEndpoint" scope="default" type="STRING"/>
-            <call>
-                <endpoint key="ValidateKOHAEndpoint"/>
-            </call>
-            <log level="full"/>
-            <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSKOHA" scope="default" type="STRING"/>
-            <log level="full">
-                <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSKOHA"/>
-            </log>
-            <property expression="json-eval($.data.content)" name="pendingItemsBDUXXI" scope="default" type="STRING"/>
-            <payloadFactory media-type="json">
-                <format>
-				{
-				  "product": "Interfaz de Pay y Salvos Universidad del Rosario",
-				  "version": "1.0",
-				  "releaseDate": "2025-03-21T00:00:00.000Z",
-				  "demo": true,
-				  "person": {
-				    "id": "$1",
-				    "name": "$2",
-				    "summary": {
-				    	"WSBDUXXI": $3,
-				    	"WSSAPHANNA": $4,
-				    	"WSKOHA": $5
-				    }
-				  },
-				  "status": "$6",
-				  "status_code": "000000"
-				}                  
-				</format>
-                <args>
-                    <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
-                    <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
-                    <arg evaluator="xml" expression="$ctx:uri.var.RespuestaWSBDUXXI"/>
-                    <arg evaluator="xml" expression="$ctx:uri.var.RespuestaWSSAP"/>
-                    <arg evaluator="xml" expression="$ctx:uri.var.RespuestaWSKOHA"/>
-                    <arg evaluator="xml" expression="$ctx:uri.var.MensajeInterfaz"/>
-                </args>
-            </payloadFactory>
+            </switch>            
+            <switch source="get-property('query.param.studentid')">
+                <case regex="^(79|51|52).*">
+                    <payloadFactory media-type="json">
+                        <format>
+                        {
+                            "product": "Interfaz de Pay y Salvos Universidad del Rosario",
+                            "version": "1.0",
+                            "releaseDate": "2025-03-21T00:00:00.000Z",
+                            "demo": true,
+                            "person": {
+                                "id": "$1",
+                                "name": "$2",
+                                "summary": {
+                                    "WSBDUXXI": [
+                                        {
+                                            "name": "Pending Item No.1",
+                                            "value": "20000"
+                                        },
+                                        {
+                                            "name": "Pending Item No.2",
+                                            "value": "40000"
+                                        }
+                                    ],
+                                    "WSSAPHANNA": [
+                                        {
+                                            "name": "Pending Item No.1",
+                                            "value": "12300"
+                                        },
+                                        {
+                                            "name": "Pending Item No.2",
+                                            "value": "70000"
+                                        }
+                                    ],
+                                    "WSKOHA": [
+                                        {
+                                            "name": "Pending Item No.1",
+                                            "value": "33300"
+                                        },
+                                        {
+                                            "name": "Pending Item No.2",
+                                            "value": "55000"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "$3",
+                            "status_code": "000000"
+                        }                   
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.MensajeInterfaz"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatebduxxi?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <case regex="^(17|21|41).*">
+                    <payloadFactory media-type="json">
+                        <format>
+                        {
+                            "product": "Interfaz de Pay y Salvos Universidad del Rosario",
+                            "version": "1.0",
+                            "releaseDate": "2025-03-21T00:00:00.000Z",
+                            "demo": true,
+                            "person": {
+                                "id": "$1",
+                                "name": "$2",
+                                "summary": {
+                                    "WSBDUXXI": [],
+                                    "WSSAPHANNA": [],
+                                    "WSKOHA": []
+                                }
+                            },
+                            "status": "$3",
+                            "status_code": "000000"
+                        }              
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.MensajeInterfaz"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatebduxxi?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <default>
+                    <payloadFactory media-type="json">
+                        <format>
+                        {
+                            "product": "Interfaz de Pay y Salvos Universidad del Rosario",
+                            "version": "1.0",
+                            "releaseDate": "2025-03-21T00:00:00.000Z",
+                            "demo": true,
+                            "person": {
+                                "id": "$1",
+                                "name": "$2",
+                                "summary": {
+                                    "WSBDUXXI": [],
+                                    "WSSAPHANNA": [],
+                                    "WSKOHA": []
+                                }
+                            },
+                            "status": "$3",
+                            "status_code": "000000"
+                        }           
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.MensajeInterfaz"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatebduxxi?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </default>
+            </switch>            
             <property expression="fn:concat('/readvalidateinterfacestudents?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
             <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
             <property expression="$body" name="request_out" scope="default" type="STRING"/>

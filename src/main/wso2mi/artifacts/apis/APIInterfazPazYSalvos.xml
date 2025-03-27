@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/apihubintpazsalvos" name="APIInterfazPazYSalvos" statistics="enable" trace="enable" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/readvalidateinterfacestudents?studentid={studentid}">
+        <inSequence>
+            <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
+            <property expression="fn:concat('URosario Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
+            <switch source="get-property('query.param.studentid')">
+                <case regex="^(79|51|52).*">
+                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante tiene temas pendientes, no es posible generar el Paz y salvo correspondiente"/>
+                </case>
+                <case regex="^(17|21|41).*">
+                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante sin tiene temas pendientes, es posible generar el Paz y salvo correspondiente"/>
+                </case>
+                <default>
+                    <property name="uri.var.MensajeInterfaz" scope="default" type="STRING" value="El estudiante sin tiene temas pendientes, es posible generar el Paz y salvo correspondiente"/>
+                </default>
+            </switch>
+            <!-- readvalidatebduxxi -->
+            <property expression="fn:concat('http://localhost:8290/apihubiurosario/readvalidatebduxxi?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateBduxxiEndpoint" scope="default" type="STRING"/>
+            <call>
+                <endpoint key="ValidateBduxxiEndpoint"/>
+            </call>
+            <log level="full"/>
+            <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSBDUXXI" scope="default" type="STRING"/>
+            <log level="full">
+                <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSBDUXXI"/>
+            </log>
+            <!-- readvalidatewssap -->
+            <property expression="fn:concat('http://localhost:8290/apihubiurosario/readvalidatewssap?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateSAPHANNAEndpoint" scope="default" type="STRING"/>
+            <call>
+                <endpoint key="ValidateSAPHANNAEndpoint"/>
+            </call>
+            <log level="full"/>
+            <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSSAP" scope="default" type="STRING"/>
+            <log level="full">
+                <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSSAP"/>
+            </log>
+            <!-- readvalidatewskoha -->
+            <property expression="fn:concat('http://localhost:8290/apihubiurosario/readvalidatewskoha?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateKOHAEndpoint" scope="default" type="STRING"/>
+            <call>
+                <endpoint key="ValidateKOHAEndpoint"/>
+            </call>
+            <log level="full"/>
+            <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSKOHA" scope="default" type="STRING"/>
+            <log level="full">
+                <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSKOHA"/>
+            </log>
+            <property expression="json-eval($.data.content)" name="pendingItemsBDUXXI" scope="default" type="STRING"/>
+            <payloadFactory media-type="json">
+                <format>
+				{
+				  "product": "Interfaz de Pay y Salvos Universidad del Rosario",
+				  "version": "1.0",
+				  "releaseDate": "2025-03-21T00:00:00.000Z",
+				  "demo": true,
+				  "person": {
+				    "id": "$1",
+				    "name": "$2",
+				    "summary": {
+				    	"WSBDUXXI": $3,
+				    	"WSSAPHANNA": $4,
+				    	"WSKOHA": $5
+				    }
+				  },
+				  "status": "$6",
+				  "status_code": "000000"
+				}                  
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                    <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                    <arg evaluator="xml" expression="$ctx:uri.var.RespuestaWSBDUXXI"/>
+                    <arg evaluator="xml" expression="$ctx:uri.var.RespuestaWSSAP"/>
+                    <arg evaluator="xml" expression="$ctx:uri.var.RespuestaWSKOHA"/>
+                    <arg evaluator="xml" expression="$ctx:uri.var.MensajeInterfaz"/>
+                </args>
+            </payloadFactory>
+            <property expression="fn:concat('/readvalidateinterfacestudents?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+            <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+            <property expression="$body" name="request_out" scope="default" type="STRING"/>
+            <sequence key="AuditLogSequence"/>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

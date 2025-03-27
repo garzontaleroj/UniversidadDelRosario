@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="AuditLogSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="full" separator="|">
+        <property expression="get-property('servicio')" name="servicio"/>
+        <property expression="get-property('request_in')" name="request_in"/>
+        <property expression="get-property('request_out')" name="request_out"/>
+    </log>
+</sequence>

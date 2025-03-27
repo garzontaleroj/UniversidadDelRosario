@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/apihubiurosario" name="ApiHubURosario" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/readvalidatebduxxi?studentid={studentid}">
+        <inSequence>
+            <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
+            <property expression="fn:concat('BDUXXI Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
+            <switch source="get-property('query.param.studentid')">
+                <case regex="^(79|51|52).*">
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas Universitas XXI",
+						  "version": "3.1",
+						  "releaseDate": "2014-06-25T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": [
+						      {
+						        "name": "Pending Item No.1",
+						        "value": "20000"
+						      },
+						      {
+						        "name": "Pending Item No.2",
+						        "value": "40000"
+						      }
+						    ]
+						  },
+						  "status": "The student has outstanding debts with BDUXXI system",
+						  "status_code": "111111"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatebduxxi?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <case regex="^(17|21|41).*">
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas Universitas XXI",
+						  "version": "3.1",
+						  "releaseDate": "2014-06-25T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": []
+						  },
+						  "status": "The student doesn´t have outstanding debts with BDUXXI system",
+						  "status_code": "000000"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatebduxxi?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <default>
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas Universitas XXI",
+						  "version": "3.1",
+						  "releaseDate": "2014-06-25T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": []
+						  },
+						  "status": "The student doesn´t have outstanding debts with BDUXXI system",
+						  "status_code": "000000"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatebduxxi?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </default>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/readvalidatewssap?studentid={studentid}">
+        <inSequence>
+            <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
+            <property expression="fn:concat('SAP Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
+            <switch source="$ctx:uri.var.studentid">
+                <case regex="^(79|52|51).*">
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas SAP",
+						  "version": "6.1",
+						  "releaseDate": "2020-03-21T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": [
+						      {
+						        "name": "Pending Item No.1",
+						        "value": "12300"
+						      },
+						      {
+						        "name": "Pending Item No.2",
+						        "value": "70000"
+						      }
+						    ]
+						  },
+						  "status": "The student has outstanding debts with SAP system",
+						  "status_code": "111111"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatewssap?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <case regex="^(17|21|41).*">
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas SAP",
+						  "version": "6.1",
+						  "releaseDate": "2020-03-21T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": []
+						  },
+						  "status": "The student doesn´t have outstanding debts with SAP system",
+						  "status_code": "000000"
+						}                            
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatewssap?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <default>
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas KOHA",
+						  "version": "6.1",
+						  "releaseDate": "2020-03-21T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": []
+						  },
+						  "status": "The student doesn´t have outstanding debts with SAP system",
+						  "status_code": "000000"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatewssap?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </default>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/readvalidatewskoha?studentid={studentid}">
+        <inSequence>
+            <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
+            <property expression="fn:concat('KOHA Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
+            <switch source="$ctx:uri.var.studentid">
+                <case regex="^(79|52|51).*">
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas KOHA",
+						  "version": "9.1",
+						  "releaseDate": "2019-09-09T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": [
+						      {
+						        "name": "Pending Item No.1",
+						        "value": "33300"
+						      },
+						      {
+						        "name": "Pending Item No.2",
+						        "value": "55000"
+						      }
+						    ]
+						  },
+						  "status": "The student has outstanding debts with KOHA system",
+						  "status_code": "111111"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatewskoha?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <case regex="^(17|21|41).*">
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas KOHA",
+						  "version": "9.1",
+						  "releaseDate": "2019-09-09T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": []
+						  },
+						  "status": "The student doesn´t have outstanding debts with KOHA system",
+						  "status_code": "000000"
+						}                            
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatewskoha?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </case>
+                <default>
+                    <payloadFactory media-type="json">
+                        <format>
+						{
+						  "product": "Servicio Consultas KOHA",
+						  "version": "9.1",
+						  "releaseDate": "2019-09-09T00:00:00.000Z",
+						  "demo": true,
+						  "person": {
+						    "id": "$1",
+						    "name": "$2",
+						    "pendingItems": []
+						  },
+						  "status": "The student doesn´t have outstanding debts with KOHA system",
+						  "status_code": "000000"
+						}                  
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentid"/>
+                            <arg evaluator="xml" expression="$ctx:uri.var.studentname"/>
+                        </args>
+                    </payloadFactory>
+                    <property expression="fn:concat('/readvalidatewskoha?studentid=', get-property('query.param.studentid'))" name="servicio" scope="default" type="STRING"/>
+                    <property expression="get-property('query.param.studentid')" name="request_in" scope="default" type="STRING"/>
+                    <property expression="$body" name="request_out" scope="default" type="STRING"/>
+                    <sequence key="AuditLogSequence"/>
+                    <log level="full"/>
+                </default>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

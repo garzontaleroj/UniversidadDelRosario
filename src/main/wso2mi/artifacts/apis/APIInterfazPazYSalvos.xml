@@ -2,6 +2,7 @@
 <api context="/apihubintpazsalvos" name="APIInterfazPazYSalvos" statistics="enable" trace="enable" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="GET" uri-template="/readvalidateinterfacestudents?studentid={studentid}">
         <inSequence>
+            <property value="eyJraWQiOiJnYXRld2F5X2NlcnRpZmljYXRlX2FsaWFzIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJiOTY5MGZiYS04MzgwLTRkZDQtYWJhMy1jNzY4YzU0YmMyMzZAY2FyYm9uLnN1cGVyIiwiYXVkIjoiY2hvcmVvOmRlcGxveW1lbnQ6c2FuZGJveCIsIm9yZ2FuaXphdGlvbiI6eyJ1dWlkIjoiYzE5ZTIwZTMtOGYxZi00NGQ2LWFiNTgtNTk0ZmVmNDdjZmIyIn0sImlzcyI6Imh0dHBzOlwvXC9zdHMuY2hvcmVvLmRldjo0NDNcL2FwaVwvYW1cL3B1Ymxpc2hlclwvdjJcL2FwaXNcL2ludGVybmFsLWtleSIsImtleXR5cGUiOiJTQU5EQk9YIiwic3Vic2NyaWJlZEFQSXMiOlt7InN1YnNjcmliZXJUZW5hbnREb21haW4iOm51bGwsIm5hbWUiOiJ1bml2ZXJzaWRhZGRlbHJvc2FyaW8gLSBBcGlIdWJVUm9zYXJpbyIsImNvbnRleHQiOiJcL2MxOWUyMGUzLThmMWYtNDRkNi1hYjU4LTU5NGZlZjQ3Y2ZiMlwvd29ya3Nob3BcL3VuaXZlcnNpZGFkZGVscm9zYXJpb1wvYXBpaHVidXJvc2FyaW8tOGFlXC92MS4wIiwicHVibGlzaGVyIjoiY2hvcmVvX3Byb2RfYXBpbV9hZG1pbiIsInZlcnNpb24iOiJ2MS4wIiwic3Vic2NyaXB0aW9uVGllciI6bnVsbH1dLCJleHAiOjE3NDMwODY3NzMsInRva2VuX3R5cGUiOiJJbnRlcm5hbEtleSIsImlhdCI6MTc0MzA4NjE3MywianRpIjoiODI3MmQxN2QtNWE2My00OGMwLThhZjQtN2ZkMzE5YmVjMWRkIn0.XKwkyOTlR0F8DhujiyCtQN822jtO_qn4s6hSr9hkKllLmKdCXZherJD23aPWs0FGzf-L_VPM2Cl_tZLyBz_NFiMrilu0C6nT1SdMyeeo71PDChtYi7PHKzFQ_TANVYvmAnNd-GQehnSwqK2HrakRMJhTd7E_n8SYmnpQfNh7p6CBtNfVVAA0fGVlqo1292xogJzjRfBwtanZnxhpShASMM5D5CBWnMP6VwEw8YOJz9evoADVuEqWXuIcdWVHj83erUScIQYe6jtcLoQntMZuzES_JVyRDQ9YSjzOLhIIN7Nu6SjUZ4TOnuFzAjI5HxWK7aUVCv9Qm1qWkqQxAWqJ40xbBmwKTWXJEbDoj0atLQ9w1zzGt6nua_L8oKN9BdTEGWYXtytoRmqkeeZeKeDBMlIUlLTCbybArBMXdf_5_9DumwLj2ath_CTGMc8uhuCdTjIuqmxj92VyUEmm7aIoSWjdpHbiDEBw7RgSnpMBo3XNgLYDReMYHGIGGjaiTG6y8pR3_SDatmCbtb3rk-LfkDUmplZI872dEhn1NQlTBWztVPZCHj5EhSNmkSHAk3Z2BZhAivO4T3ki2f1a1DRNHZi68ZTMGvswAnTTd-H8YKAogwGZvpxIlru9tcOFxxFgzLg4bd-_x2mDOS3-163F-wM0ygl21hXwNGZcWbpmSH4" name="Test-Key" scope="default" type="STRING"/>
             <property expression="get-property('query.param.studentid')" name="uri.var.studentid" scope="default" type="STRING"/>
             <property expression="fn:concat('URosario Student ', get-property('uri.var.studentid'))" name="uri.var.studentname" scope="default" type="STRING"/>
             <switch source="get-property('query.param.studentid')">
@@ -16,7 +17,8 @@
                 </default>
             </switch>
             <!-- readvalidatebduxxi -->
-            <property expression="fn:concat('http://localhost:8290/apihubiurosario/readvalidatebduxxi?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateBduxxiEndpoint" scope="default" type="STRING"/>
+            <property name="Test-Key" scope="transport" expression="get-property('Test-Key')"/>
+            <property expression="fn:concat('https://c19e20e3-8f1f-44d6-ab58-594fef47cfb2-dev.e1-us-east-azure.choreoapis.dev/workshop/universidaddelrosario/apihuburosario-8ae/v1.0/readvalidatebduxxi?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateBduxxiEndpoint" scope="default" type="STRING"/>
             <call>
                 <endpoint key="ValidateBduxxiEndpoint"/>
             </call>
@@ -26,7 +28,7 @@
                 <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSBDUXXI"/>
             </log>
             <!-- readvalidatewssap -->
-            <property expression="fn:concat('http://localhost:8290/apihubiurosario/readvalidatewssap?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateSAPHANNAEndpoint" scope="default" type="STRING"/>
+            <property expression="fn:concat('https://c19e20e3-8f1f-44d6-ab58-594fef47cfb2-dev.e1-us-east-azure.choreoapis.dev/workshop/universidaddelrosario/apihuburosario-8ae/v1.0/readvalidatewssap?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateSAPHANNAEndpoint" scope="default" type="STRING"/>
             <call>
                 <endpoint key="ValidateSAPHANNAEndpoint"/>
             </call>
@@ -36,7 +38,7 @@
                 <property expression="json-eval($.person.pendingItems)" name="uri.var.RespuestaWSSAP"/>
             </log>
             <!-- readvalidatewskoha -->
-            <property expression="fn:concat('http://localhost:8290/apihubiurosario/readvalidatewskoha?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateKOHAEndpoint" scope="default" type="STRING"/>
+            <property expression="fn:concat('https://c19e20e3-8f1f-44d6-ab58-594fef47cfb2-dev.e1-us-east-azure.choreoapis.dev/workshop/universidaddelrosario/apihuburosario-8ae/v1.0/readvalidatewskoha?studentid=', $ctx:uri.var.studentid)" name="uri.var.ValidateKOHAEndpoint" scope="default" type="STRING"/>
             <call>
                 <endpoint key="ValidateKOHAEndpoint"/>
             </call>
